@@ -4,6 +4,8 @@ import {connect} from 'react-redux'
 import * as actions from 'actions';
 import { Link } from 'react-router-dom'
 
+import "styles/home";
+
 class Home extends Component {
   /*  constructor(props, context) {
     super(props, context);
@@ -20,9 +22,9 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
+      <div id='home'>
         <h1 className='oo' onClick={(e) => this.click(e)}>{this.props.random}</h1>
-        <Link to={'/vod'}>haha</Link>
+        <Link to={'/vod'}>Vod</Link>
       </div>
     );
   }
