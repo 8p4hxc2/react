@@ -1,11 +1,12 @@
 const path = require('path');
 const APP_DIR = path.resolve(__dirname, 'app');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 let output = {
   filename: 'bundle.js'
 };
 
-let plugins = [];
+let plugins = [new ExtractTextPlugin('style.css')];
 
 let devtool = "inline-source-map";
 let presetBabel = ['es2015', 'react'];
@@ -25,6 +26,25 @@ const config = {
         query: {
           presets: ['es2015', 'react']
         }
+      }, {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract([
+          'css-loader', {
+            loader: 'postcss-loader',
+            options: {
+              plugins: function() {
+                return [require('autoprefixer')];
+              }
+            }
+          }, {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                "screenRatio": process.env.SCREEN_RATIO || 1
+              }
+            }
+          }
+        ])
       }
     ]
   },
@@ -37,7 +57,9 @@ const config = {
     alias: {
       'components': path.resolve(__dirname, 'app', 'components'),
       'reducers': path.resolve(__dirname, 'app', 'reducers'),
-      'actions': path.resolve(__dirname, 'app', 'actions')
+      'middlewares': path.resolve(__dirname, 'app', 'middlewares'),
+      'actions': path.resolve(__dirname, 'app', 'actions'),
+      'styles': path.resolve(__dirname, 'app', 'styles')
     }
   },
   devServer: {
