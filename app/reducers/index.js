@@ -1,12 +1,10 @@
-export default(state, action) => {
-  switch (action.type) {
-    case 'RANDOM':
-      return {
-        random: 'STORE===' + Math.random()
-      };
-      break;
+import { combineReducers } from 'redux'
+import rail from './rail'
+import random from './random'
 
-    default:
-      return state;
-  }
-};
+const testApp = combineReducers({
+  rail,
+  random
+})
+
+export default testApp
